@@ -14,6 +14,8 @@ Denomination game
 
 class Constants(BaseConstants):
     name_in_url = 'denomination'
+    # Para cambiar el numero total de participantes (no por grupos), vayan al archivo config_values.py. Esta dentro
+    # del proyecto, pero fuera del app
     players_per_group = None
     # Dinero con el que inician el juego
     dotacion = 5
