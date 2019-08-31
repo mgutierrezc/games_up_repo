@@ -1,4 +1,5 @@
 from os import environ
+import config_values as cv
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
@@ -15,7 +16,7 @@ SESSION_CONFIGS = [
     dict(
         name='denomination',
         display_name="Denomination",
-        num_demo_participants=10,
+        num_demo_participants=cv.num_participants,
         app_sequence=['denomination']
     ),
     dict(

@@ -7,7 +7,6 @@ from .models import Constants
 # clase, a excepción de los waitpages
 
 class Introduction(Page):
-    # Aquí se presentan las reglas básicas del experimento
     pass
 
 class Encuesta(Page):
@@ -28,11 +27,18 @@ class Compra(Page):
     form_model = 'player'
     form_fields = ['bien1', 'bien2']
 
+    def error_message(self, values):
+        if values['bien1']*Constants.precio1 + values['bien2']*Constants.precio2 > 5:
+            self.player.incorrect = 1
+            return 'Error'
+        else:
+            self.player.incorrect = 0
+
 class Results(Page):
     def vars_for_template(self):
         player = self.player
         dotacion = Constants.dotacion
-        vuelto = player.payoff - (Constants.precio1*player.bien1 + Constants.precio2*player.bien2)
+        vuelto = Constants.dotacion - (Constants.precio1*player.bien1 + Constants.precio2*player.bien2)
         return {'dotacion': dotacion, 'vuelto': vuelto}
 
 

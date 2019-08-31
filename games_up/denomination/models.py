@@ -2,7 +2,8 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-import random, itertools
+import random
+import config_values as cv
 
 author = 'Your name here'
 
@@ -24,23 +25,8 @@ class Constants(BaseConstants):
     instructions_template = 'denomination/Instructions.html'
 
 
-
 class Subsession(BaseSubsession):
-    def creating_session(self):
-        # En cada ronda, se aleatorizará el rol (si recibirán 5 soles en duro o en varias monedas)
-        # Si quieren que los roles permanezcan fijos, quiten las comillas del siguiente código en lugar
-        # del código actual de este método
-        """
-        if self.round_number == 1:
-        'Añadir una tabulación a las lineas siguientes'
-        """
-        players = self.get_players()
-        random.shuffle(players)
-        treatments = itertools.cycle(['Soles', 'Centavos'])
-        for p in players:
-            # Esta es una variable auxiliar que nos permite realizar la asignación aleatoria de roles, pero no la
-            # registra en la base de datos creada por otree
-            p.participant.vars['rol'] = treatments.next()
+    pass
 
 class Group(BaseGroup):
     def set_payoffs(self):
@@ -52,9 +38,12 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    # Para que puedan ver quién está en cada tratamiento, crearemos una variable (field en otree) que lo registre en
-    # nuestros datos (igualaremos su valor al de la variable auxiliar)
-    rol = models.StringField()
+    # Asignamos a quienes hayan sido elegidos aleatoriamente como la primera mitad de los jugadores
+    def role(self):
+        if self.id_in_group <= cv.num_participants/2:
+            return 'Soles'
+        else:
+            return 'Centavos'
 
     # Crearemos aquí las variables que almacenen las respuestas de la encuesta inicial
     # Si una pregunta implica una pregunta con opciones, créenla de esta forma (RadioSelect es un widget
@@ -66,9 +55,12 @@ class Player(BasePlayer):
     # Si implica respuestas numéricas (Enteras). Usar FloatField si quieren con decimales
     edad = models.IntegerField(label='¿Cuál es tu edad?')
 
+    # Verificador de que se cumple la restriccion impuesta por la dotac
+    incorrect = models.IntegerField()
+
     # Crearemos aquí las variables que almacenen el número de pedidos de los bienes que quieren comprar
-    bien1 = models.IntegerField(label='¿Cuánto quieres comprar del bien 1?')
-    bien2 = models.IntegerField(label='¿Cuánto quieres comprar del bien 2?')
+    bien1 = models.IntegerField(label='¿Cuánto quieres comprar del bien 1? Precio: {}'.format(Constants.precio1))
+    bien2 = models.IntegerField(label='¿Cuánto quieres comprar del bien 2? Precio: {}'.format(Constants.precio2))
 
     # Creamos una variable que guarde lo gastado en las compras y el vuelto
     gastos = models.FloatField(max=5, min=0)
