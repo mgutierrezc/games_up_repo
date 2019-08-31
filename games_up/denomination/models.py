@@ -21,12 +21,12 @@ class Constants(BaseConstants):
     # Definiremos aquí el costo de los bienes ofrecidos
     precio1 = 2
     precio2 = 3
+    instructions_template = 'denomination/Instructions.html'
 
 
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-
         # En cada ronda, se aleatorizará el rol (si recibirán 5 soles en duro o en varias monedas)
         # Si quieren que los roles permanezcan fijos, quiten las comillas del siguiente código en lugar
         # del código actual de este método
@@ -61,14 +61,14 @@ class Player(BasePlayer):
     # para mostrar a las personas las respuestas como alternativas de opción múltiple)
     sexo = models.StringField(
         choices=['Masculino', 'Femenino'],
-        label='What is your gender?',
+        label='¿Cuál es tu sexo?',
         widget=widgets.RadioSelect)
     # Si implica respuestas numéricas (Enteras). Usar FloatField si quieren con decimales
-    edad = models.IntegerField()
+    edad = models.IntegerField(label='¿Cuál es tu edad?')
 
     # Crearemos aquí las variables que almacenen el número de pedidos de los bienes que quieren comprar
-    bien1 = models.IntegerField()
-    bien2 = models.IntegerField()
+    bien1 = models.IntegerField(label='¿Cuánto quieres comprar del bien 1?')
+    bien2 = models.IntegerField(label='¿Cuánto quieres comprar del bien 2?')
 
     # Creamos una variable que guarde lo gastado en las compras y el vuelto
     gastos = models.FloatField(max=5, min=0)

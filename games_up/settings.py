@@ -13,6 +13,12 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 SESSION_CONFIGS = [
     dict(
+        name='denomination',
+        display_name="Denomination",
+        num_demo_participants=10,
+        app_sequence=['denomination']
+    ),
+    dict(
         name='public_goods',
         display_name="Public Goods",
         num_demo_participants=3,
