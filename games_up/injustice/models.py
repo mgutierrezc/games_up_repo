@@ -14,7 +14,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'injustice'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 3
 
     # Escojan aquí la dotac del comprador y los pagos recibidos por poseer el bien x
     dotacion_inicial = 10
@@ -44,16 +44,17 @@ class Group(BaseGroup):
                 p.pago_anterior = p.in_round(self.round_number - 1).pago
                 p.pago_anterior = p.in_round(self.round_number - 1).pago
 
-            if self.precio_aceptado is True:
-                if p.bien_x is True:
-                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+            
+                if self.precio_aceptado is True:
+                    if p.bien_x is True:
+                        p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                    else:
+                        p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
                 else:
-                    p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
-            else:
-                if p.bien_x is True:
-                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
-                else:
-                    p.payoff = p.dotacion + p.pago_anterior + p.extraccion
+                    if p.bien_x is True:
+                        p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                    else:
+                        p.payoff = p.dotacion + p.pago_anterior + p.extraccion
 
             if self.precio_aceptado is True:
                 if p.bien_x is True:

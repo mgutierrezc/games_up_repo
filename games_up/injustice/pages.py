@@ -14,8 +14,9 @@ class Introduction(Page):
         else:
             self.player.bien_x = True
 
+
 class Chat(Page):
-    pass
+    timeout_seconds = 120
 
 
 class Extraccion(Page):
