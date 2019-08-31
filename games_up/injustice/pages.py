@@ -8,8 +8,11 @@ import config_values as cv
 
 
 class Introduction(Page):
-    pass
-
+    def before_next_page(self):
+        if self.player.role() == 'A':
+            self.player.bien_x = False
+        else:
+            self.player.bien_x = True
 
 class Chat(Page):
     pass
@@ -23,7 +26,7 @@ class Extraccion(Page):
     def is_displayed(self):
         if self.session.config['treatment'] == 0 and self.player.role() == 'A':
             return False
-        else:
+        elif self.session.config['treatment'] == 1 and self.player.role() == 'A':
             return True
 
 
@@ -47,13 +50,16 @@ class Aceptar_Oferta(Page):
         return self.player.bien_x is True
 
 
-class EsperaResultados(Page):
-    def before_next_page(self):
-        if self.group.precio_aceptado is True:
-            if self.player.bien_x is False:
-                self.player.bien_x = False
-            else:
-                self.player.bien_x = True
+class EsperaResultados(WaitPage):
+    def after_all_players_arrive(self):
+        players = self.group.get_players()
+        for p in range(1, 3):
+            if self.group.precio_aceptado is True:
+                if players[p].bien_x is False:
+                    self.players[p].bien_x = False
+                else:
+                    self.players[p].bien_x = True
+
 
 class Results(Page):
     pass
@@ -63,6 +69,7 @@ page_sequence = [
     Introduction,
     Extraccion,
     Espera,
+    Chat,
     Oferta,
     Espera,
     Aceptar_Oferta,

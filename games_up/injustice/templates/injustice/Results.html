@@ -9,11 +9,11 @@
 
     {% if group.precio_aceptado == True %}
 
-    Ambos comenzaron la ronda con {{ player.dotacion }}. Se decidió transar y ahora tienen {{ player.payoff }}
+    Ambos comenzaron la ronda con {{ player.dotacion }}. Se decidió transar y ahora tienen {{ player.pago }}
 
     {% else %}
 
-    Ambos comenzaron la ronda con {{ player.dotacion }}. No se decidió transar y ahora tienen {{ player.payoff }}
+    Ambos comenzaron la ronda con {{ player.dotacion }}. No se decidió transar y ahora tienen {{ player.pago }}
 
     {% endif %}
     {% next_button %}
