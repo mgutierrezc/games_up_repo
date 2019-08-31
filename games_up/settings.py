@@ -17,7 +17,12 @@ SESSION_CONFIGS = [
         name='injustice',
         display_name="Injustice",
         num_demo_participants=cv.num_participants,
-        app_sequence=['injustice']
+        app_sequence=['injustice'],
+        treatment=0,
+        doc="""
+        treatment = 0: Juego en versión de control
+        treatment = 1: Juego en versión de tratamiento
+        """
     ),
     dict(
         name='public_goods',
