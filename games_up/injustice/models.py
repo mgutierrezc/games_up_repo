@@ -29,10 +29,12 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
+    # Precio
     precio = models.FloatField(min=0)
-    # Variable para registrar si hubo (True) o no transaccion (False)
-    transaccion = models.BooleanField()
-
+    # Variable de Aceptación (True) o Rechazo (False) del precio
+    precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
+        [True, 'Aceptar'], [False, 'Rechazar']])
+    
     def set_payoffs(self):
         players = self.get_players()
         for p in players:
@@ -40,7 +42,7 @@ class Group(BaseGroup):
                 p.pago_anterior = p.in_round(self.round_number - 1).payoff
 
             if p.role() == 'A':
-                if self.transaccion is True:
+                if self.precio_aceptado is True:
                     if p.bien_x is True:
                         p.payoff = p.dotacion - self.precio + Constants.pagos_x + p.pago_anterior + p.extraccion
                     else:
@@ -52,7 +54,7 @@ class Group(BaseGroup):
                         p.payoff = p.dotacion + p.pago_anterior + p.extraccion
 
             else:
-                if self.transaccion is True:
+                if self.precio_aceptado is True:
                     if p.bien_x is True:
                         p.payoff = p.dotacion - self.precio + Constants.pagos_x + p.pago_anterior - p.extraccion
                     else:
@@ -79,4 +81,4 @@ class Player(BasePlayer):
             return 'B'
 
     def extraccion_max(self):
-        return
+        return self.dotacion

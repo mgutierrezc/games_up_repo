@@ -11,32 +11,53 @@ class Introduction(Page):
     pass
 
 
+class Chat(Page):
+    pass
+
+
 class Extraccion(Page):
     form_model = 'player'
     form_fields = ['extraccion']
 
     # Solo se mostará si estamos en el tratamiento
     def is_displayed(self):
-        if self.session.config['treatment'] == 0:
+        if self.session.config['treatment'] == 0 and self.player.role() == 'A':
             return False
         else:
             return True
 
 
 class Espera(WaitPage):
-    def after_all_players_arrive(self):
-        pass
-
-
-class Transaccion(Page):
     pass
+
+
+class Oferta(Page):
+    form_model = 'group'
+    form_fields = ['precio']
+
+    def is_displayed(self):
+        return self.player.role() == 'A'
+
+
+class Aceptar_Oferta(Page):
+    form_model = 'group'
+    form_fields = ['precio_aceptado']
+
+    def is_displayed(self):
+        return self.player.role() == 'B'
+
 
 class Results(Page):
     pass
 
 
 page_sequence = [
-    MyPage,
+    Introduction,
+    Extraccion,
+    Espera,
+    Oferta,
+    Espera,
+    Aceptar_Oferta,
     Espera,
     Results
 ]
