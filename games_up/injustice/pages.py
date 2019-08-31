@@ -52,6 +52,7 @@ class Aceptar_Oferta(Page):
 
 class EsperaResultados(WaitPage):
     def after_all_players_arrive(self):
+        self.group.set_payoffs()
         players = self.group.get_players()
         for p in range(1, 3):
             if self.group.precio_aceptado is True:
