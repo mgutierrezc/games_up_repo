@@ -13,7 +13,7 @@ Your app description
 
 class Constants(BaseConstants):
     name_in_url = 'injustice'
-    players_per_group = None
+    players_per_group = 2
     num_rounds = 1
 
 
@@ -26,4 +26,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    def role(self):
+        if self.id_in_group == 1 and :
+            return 'A'
+        else:
+            return 'B'
