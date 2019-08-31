@@ -44,29 +44,27 @@ class Group(BaseGroup):
                 p.pago_anterior = p.in_round(self.round_number - 1).pago
                 p.pago_anterior = p.in_round(self.round_number - 1).pago
 
-            self.participant.pago = c(10)
+            if self.precio_aceptado is True:
+                if p.bien_x is True:
+                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                else:
+                    p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
+            else:
+                if p.bien_x is True:
+                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                else:
+                    p.payoff = p.dotacion + p.pago_anterior + p.extraccion
 
             if self.precio_aceptado is True:
                 if p.bien_x is True:
-                    p.pago = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
                 else:
-                    p.pago = p.dotacion + self.precio + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion + self.precio + p.pago_anterior - p.extraccion
             else:
                 if p.bien_x is True:
-                    p.pago = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
                 else:
-                    p.pago = p.dotacion + p.pago_anterior + p.extraccion
-
-            if self.precio_aceptado is True:
-                if p.bien_x is True:
-                    p.pago = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
-                else:
-                    p.pago = p.dotacion + self.precio + p.pago_anterior - p.extraccion
-            else:
-                if p.bien_x is True:
-                    p.pago = p.dotacion + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
-                else:
-                    p.pago = p.dotacion + p.pago_anterior - p.extraccion
+                    p.payoff = p.dotacion + p.pago_anterior - p.extraccion
 
 class Player(BasePlayer):
     # Variable para saber si alguien tiene o no el bien x (True lo tiene, False no)
