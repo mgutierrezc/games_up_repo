@@ -30,7 +30,7 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     # Precio
-    precio = models.FloatField(min=0)
+    precio = models.FloatField(max=Constants.dotacion_inicial, min=0)
     # Variable de Aceptación (True) o Rechazo (False) del precio
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
         [True, 'Aceptar'], [False, 'Rechazar']])

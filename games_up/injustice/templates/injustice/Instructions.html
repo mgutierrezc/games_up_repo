@@ -1,12 +1,15 @@
-{% extends "global/Page.html" %}
-{% load otree static %}
+{% load otree_tags staticfiles %}
 
-{% block title %}
-    Page title
-{% endblock %}
+<div class="instructions well well-lg"></div>
 
-{% block content %}
+    <h3 class="panel-sub-heading">
+        Instrucciones (EJEMPLO) <font color="black">
+    </h3>
+    <p>
+       En esta parte del experimento vas a participar en {{ Constants.num_rounds }} rondas de la misma interacción.
+       Antes de la primera ronda, serás emparejado con otro participante y <strong>se mantendrá este emparejamiento en todas
+       las rondas</strong>.
+       El emparejamiento se realizará al azar y de forma anónima. Es decir, tendrás una contraparte pero no sabrás
+       quién es ni durante ni después del experimento. Tu identidad tampoco será revelada a tu contraparte.
 
-    {% next_button %}
-
-{% endblock %}
+    </p>

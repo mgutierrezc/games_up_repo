@@ -2,12 +2,19 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Extracción
 {% endblock %}
 
 {% block content %}
 
+    Puedes extraer de la dotacion de tu compañero de grupo
+
+    {% formfields %}
+
     {% next_button %}
+
+{% include Constants.instructions_template %}
+
 {% endblock %}
 
 
