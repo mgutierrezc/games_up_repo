@@ -30,6 +30,7 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     pass
 
+
 class Group(BaseGroup):
     def set_payoffs(self):
         players = self.get_players()
@@ -46,6 +47,14 @@ class Player(BasePlayer):
             return 'Soles'
         else:
             return 'Centavos'
+
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
 
     # Crearemos aquí las variables que almacenen las respuestas de la encuesta inicial
     # Si una pregunta implica una pregunta con opciones, créenla de esta forma (RadioSelect es un widget
