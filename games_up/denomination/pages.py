@@ -9,6 +9,7 @@ from .models import Constants
 class Introduction(Page):
     pass
 
+
 class Encuesta(Page):
     form_model = 'player'
     # Aquí escriben todas las variables que representan las respuestas que quieren de sus jugadores
@@ -21,6 +22,7 @@ class Encuesta(Page):
         else:
             self.player.player_ip = self.request.META.get('REMOTE_ADDR')
 
+
 class Espera(WaitPage):
     # Página que hará esperar a los jugadores que hayan terminado la encuesta hasta que los demás la hayan llenado.
     # Si no quieren que los jugadores esperen a los demás antes de pasar a la siguiente parte, borren esta clase y de
@@ -30,6 +32,7 @@ class Espera(WaitPage):
 
     def after_all_players_arrive(self):
         pass
+
 
 class Compra(Page):
     form_model = 'player'
@@ -41,6 +44,7 @@ class Compra(Page):
             return 'Error'
         else:
             self.player.incorrect = 0
+
 
 class Results(Page):
     def vars_for_template(self):
