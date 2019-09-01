@@ -3,22 +3,50 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class MyPage(Page):
+# Deben crear un archivo .html por cada pagina que quieran que se muestre al jugador y que esté registrada aquí como una
+# clase, a excepción de los waitpages
+
+class Introduction(Page):
     pass
 
+class Encuesta(Page):
+    form_model = 'player'
+    # Aquí escriben todas las variables que representan las respuestas que quieren de sus jugadores
+    form_fields = ['sexo', 'edad']
 
-class ResultsWaitPage(WaitPage):
-
+class Espera(WaitPage):
+    # Página que hará esperar a los jugadores que hayan terminado la encuesta hasta que los demás la hayan llenado.
+    # Si no quieren que los jugadores esperen a los demás antes de pasar a la siguiente parte, borren esta clase y de
+    # la lista page_sequence
+    title_text = "Página de Espera"
+    body_text = "Por favor, espere a que los demás terminen la sección anterior"
     def after_all_players_arrive(self):
         pass
 
+class Compra(Page):
+    form_model = 'player'
+    form_fields = ['bien1', 'bien2']
+
+    def error_message(self, values):
+        if values['bien1']*Constants.precio1 + values['bien2']*Constants.precio2 > 5:
+            self.player.incorrect = 1
+            return 'Error'
+        else:
+            self.player.incorrect = 0
 
 class Results(Page):
-    pass
+    def vars_for_template(self):
+        player = self.player
+        dotacion = Constants.dotacion
+        vuelto = Constants.dotacion - (Constants.precio1*player.bien1 + Constants.precio2*player.bien2)
+        return {'dotacion': dotacion, 'vuelto': vuelto}
 
 
 page_sequence = [
-    MyPage,
-    ResultsWaitPage,
+    Introduction,
+    Encuesta,
+    Espera,
+    Compra,
+    Espera,
     Results
 ]

@@ -1,11 +1,17 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load otree %}
 
 {% block title %}
-    Page title
+    Encuesta
 {% endblock %}
 
 {% block content %}
+
+    <p>
+        Por favor, llene la siguiente encuesta.
+    </p>
+
+    {% formfields %}
 
     {% next_button %}
 

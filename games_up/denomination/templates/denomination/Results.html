@@ -2,12 +2,14 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Resultados
 {% endblock %}
 
 {% block content %}
 
+    <p>
+    Recibiste {{ dotacion }} y, tras la compra, la cantidad de dinero restante es igual a {{ vuelto }}
+    </p>
     {% next_button %}
+
 {% endblock %}
-
-

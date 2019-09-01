@@ -1,0 +1,34 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Compra
+{% endblock %}
+
+{% block app_styles %}
+<style>
+    .otree-form-errors {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Puedes comprar lo que desees aqui usando el dinero recibido.
+    </p>
+
+    {% formfields %}
+
+{% if player.incorrect == 1 %}
+
+<p><font color=#b94a48>Estás gastando más de lo que te permiten tus ingresos. Verifica las cantidades compradas.</font></p>
+
+
+{% endif %}
+
+    {% next_button %}
+
+{% endblock %}
+

@@ -24,6 +24,12 @@ SESSION_CONFIGS = [
         treatment = 1: Juego en versión de tratamiento
         """
     ),
+    dict(    
+        name='denomination',
+        display_name="Denomination",
+        num_demo_participants=cv.num_participants,
+        app_sequence=['denomination']
+    ),
     dict(
         name='public_goods',
         display_name="Public Goods",
