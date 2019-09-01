@@ -25,7 +25,8 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        self.group_randomly(fixed_id_in_group=True)
 
 
 class Group(BaseGroup):
@@ -35,26 +36,28 @@ class Group(BaseGroup):
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
         [True, 'Aceptar'], [False, 'Rechazar']])
 
+    def compra_x(self):
+        players = self.get_players()
+        for p in players:
+            if p.bien_x is False:
+                p.bien_x = True
+            else:
+                p.bien_x = False
 
     def set_payoffs(self):
         players = self.get_players()
         
         for p in players:
-            if self.round_number > 1:
-                p.pago_anterior = p.in_round(self.round_number - 1).pago
-                p.pago_anterior = p.in_round(self.round_number - 1).pago
-
-            
-                if self.precio_aceptado is True:
-                    if p.bien_x is True:
-                        p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
-                    else:
-                        p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
+            if self.precio_aceptado is True:
+                if p.bien_x is True:
+                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
                 else:
-                    if p.bien_x is True:
-                        p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
-                    else:
-                        p.payoff = p.dotacion + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
+            else:
+                if p.bien_x is True:
+                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                else:
+                    p.payoff = p.dotacion + p.pago_anterior + p.extraccion
 
             if self.precio_aceptado is True:
                 if p.bien_x is True:

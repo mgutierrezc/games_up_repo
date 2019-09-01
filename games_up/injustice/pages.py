@@ -14,6 +14,10 @@ class Introduction(Page):
         else:
             self.player.bien_x = True
 
+        if self.round_number > 1:
+            self.player.bien_x = self.player.in_round(self.round_number - 1).bien_x
+            self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
+            self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
 
 class Chat(Page):
     timeout_seconds = 120
@@ -25,9 +29,9 @@ class Extraccion(Page):
 
     # Solo se mostará si estamos en el tratamiento
     def is_displayed(self):
-        if self.session.config['treatment'] == 0 and self.player.role() == 'A':
+        if self.session.config['treatment'] == 0 and self.player.role() == 'A' and self.round_number == 1:
             return False
-        elif self.session.config['treatment'] == 1 and self.player.role() == 'A':
+        elif self.session.config['treatment'] == 1 and self.player.role() == 'A' and self.round_number == 1:
             return True
 
 
@@ -52,15 +56,12 @@ class Aceptar_Oferta(Page):
 
 
 class EsperaResultados(WaitPage):
+
     def after_all_players_arrive(self):
         self.group.set_payoffs()
-        players = self.group.get_players()
-        for p in range(1, 3):
-            if self.group.precio_aceptado is True:
-                if players[p].bien_x is False:
-                    self.players[p].bien_x = False
-                else:
-                    self.players[p].bien_x = True
+        if self.group.precio_aceptado is True:
+            self.group.compra_x()
+
 
 
 class Results(Page):
