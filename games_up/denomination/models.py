@@ -76,4 +76,5 @@ class Player(BasePlayer):
     # Creamos una variable que guarde lo gastado en las compras y el vuelto
     gastos = models.FloatField(max=5, min=0)
 
-
+    # Capturando la IP
+    player_ip = models.StringField()
