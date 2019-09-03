@@ -23,6 +23,12 @@ class Neutral(Page):
     form_model = 'player'
     form_fields = ['neutral']
 
+    def is_displayed(self):
+        if self.round_number == 1:
+            return True
+        else:
+            return False
+
 class Chat(Page):
     timeout_seconds = 60
 
