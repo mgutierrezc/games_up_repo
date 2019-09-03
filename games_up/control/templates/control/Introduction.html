@@ -1,11 +1,16 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load staticfiles otree_tags %}
+
 
 {% block title %}
-    Page title
+
+{#Introducción#}
+
 {% endblock %}
 
 {% block content %}
+
+    {% include Constants.instructions %}
 
     {% next_button %}
 

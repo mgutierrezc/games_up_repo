@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Puja
+{% endblock %}
+
+{% block content %}
+    Recibiste un bien que genera una utilidad de {{ valor }} por poseerlo.
+    Tienes 60 segundos para decidir el precio al que venderías el bien
+    {% formfields %}
+
+    {% next_button %}
+
+{% include Constants.instructions %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Oferta
+{% endblock %}
+
+{% block content %}
+    Recibiste un bien cuyo costo de producción es {{ valor }}.
+    Tienes 60 segundos para decidir el precio al que ofertarías el bien
+    {% formfields %}
+
+    {% next_button %}
+
+{% include Constants.instructions %}
+
+{% endblock %}
