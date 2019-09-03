@@ -30,8 +30,19 @@ class Neutral(Page):
         else:
             return False
 
+
 class Chat(Page):
     timeout_seconds = 60
+
+    def is_displayed(self):
+
+        if self.round_number == 1:
+            return True
+        else:
+            if self.group.in_round(self.round_number - 1).precio_aceptado is False:
+                return True
+            else:
+                return False
 
 
 class Extraccion(Page):

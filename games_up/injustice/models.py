@@ -51,7 +51,7 @@ class Group(BaseGroup):
 
     # Variable de Aceptación (True) o Rechazo (False) del precio  --- caso tratado
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
-        [True, 'Aceptar'], [False, 'Rechazar']])
+        [True, 'Aceptar'], [False, 'Rechazar']],initial=False)
 
     def compra_x(self):
         players = self.get_players()
