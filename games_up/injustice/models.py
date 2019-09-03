@@ -17,8 +17,8 @@ class Constants(BaseConstants):
     num_rounds = 3
 
     # Escojan aquí la dotac del comprador y los pagos recibidos por poseer el bien x
-    dotacion_inicial_A = 100 - self.session.config['treatment']*20
-    dotacion_inicial_B = 10 + self.session.config['treatment']*20
+    dotacion_inicial_A = 100
+    dotacion_inicial_B = 10
     pagos_x_A = 40
     pagos_x_B = 20
 
@@ -32,7 +32,9 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
         self.group_randomly(fixed_id_in_group=True)
-
+        for p in self.get_players():
+            p.dotacion_A -= self.session.config['treatment']*20
+            p.dotacion_B += self.session.config['treatment'] * 20
 
 class Group(BaseGroup):
     # Precio
