@@ -6,7 +6,7 @@ import config_values as cv
 
 class Introduction(Page):
     def before_next_page(self):
-        self.session.vars['ofertas_pujas'] = []
+        self.session.vars['ofertas_pujas'] = list()
 
 
 class Oferta(Page):
