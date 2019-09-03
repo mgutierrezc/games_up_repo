@@ -3,6 +3,8 @@ from otree.api import (
     Currency as c, currency_range
 )
 
+# para importar settings
+import settings
 author = 'Your name here'
 
 doc = """
@@ -16,8 +18,8 @@ class Constants(BaseConstants):
     num_rounds = 3
 
     # Escojan aquí la dotac del comprador y los pagos recibidos por poseer el bien x
-    dotacion_inicial_A = 100
-    dotacion_inicial_B = 10
+    dotacion_inicial_A = 100 - self.session.config['treatment']*20
+    dotacion_inicial_B = 10 + self.session.config['treatment']*20
     pagos_x_A = 40
     pagos_x_B = 20
 
@@ -31,9 +33,7 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
         self.group_randomly(fixed_id_in_group=True)
-        for p in self.get_players():
-            p.dotacion_A -= self.session.config['treatment']*20
-            p.dotacion_B += self.session.config['treatment'] * 20
+
 
 class Group(BaseGroup):
     # Precio
@@ -52,24 +52,32 @@ class Group(BaseGroup):
             else:
                 p.bien_x = False
 
-
-
     def set_payoffs(self):
-        #players = self.get_players()
-
-        if p.role() == 'A':
+        players = self.get_players()
+        
+        for p in players:
             if self.precio_aceptado is True:
-                p.payoff = p.dotacion_A - self.precio + c(Constants.pagos_x_A) + p.extraccion
+                if p.bien_x is True:
+                    p.payoff = p.dotacion_A - self.precio + c(Constants.pagos_x_A) + p.pago_anterior + p.extraccion
+                else:
+                    p.payoff = p.dotacion_A + self.precio + p.pago_anterior + p.extraccion
             else:
-                p.payoff = p.dotacion_A + p.extraccion
-        else:
+                if p.bien_x is True:
+                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                else:
+                    p.payoff = p.dotacion + p.pago_anterior + p.extraccion
+
             if self.precio_aceptado is True:
-                p.payoff = p.dotacion_B + self.precio - p.extraccion
+                if p.bien_x is True:
+                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
+                else:
+                    p.payoff = p.dotacion + self.precio + p.pago_anterior - p.extraccion
             else:
-                p.payoff = p.dotacion_B + c(Constants.pagos_x_B) - p.extraccion
+                if p.bien_x is True:
+                    p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior - p.extraccion
+                else:
+                    p.payoff = p.dotacion + p.pago_anterior - p.extraccion
 
-
-#######################################################
 class Player(BasePlayer):
     # Variable para saber si alguien tiene o no el bien x (True lo tiene, False no)
     bien_x = models.BooleanField()
@@ -86,6 +94,5 @@ class Player(BasePlayer):
         else:
             return 'B'
 
-    # extraccion solo sería para los jugadores tipo A
     def extraccion_max(self):
         return self.dotacion
