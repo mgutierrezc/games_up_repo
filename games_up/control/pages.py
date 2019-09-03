@@ -58,13 +58,13 @@ class ResultsWaitPage(WaitPage):
         session.vars['ofertas_pujas'].sort(reverse=True)
         # Ubicación de la oferta/puja que debe ser registrada
         index = int((cv.num_participants/2)-1)
-        self.group.cleaning_price = cv.ofertas_pujas[index]
+        self.group.cleaning_price = session.vars['ofertas_pujas'][index]
 
 
 class Results(Page):
     def vars_for_template(self):
         pago = self.player.payoff
-        return {pago: 'pago'}
+        return dict(pago=pago)
 
 
 page_sequence = [
