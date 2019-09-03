@@ -18,6 +18,17 @@ class Introduction(Page):
             self.player.bien_x = self.player.in_round(self.round_number - 1).bien_x
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
+###CAMBIO MÁS RECIENTE: EVALUARLO##########(16:10 martes 3 de setiembre)
+    def is_displayed(self):
+        if self.round_number == 1:
+           return True
+        elif self.round_number == 2:
+            return self.group.in_round(self.round_number - 1).precio_aceptado is False
+        else:
+            if self.group.in_round(self.round_number - 2).precio_aceptado is False:
+                return self.group.in_round(self.round_number - 1).precio_aceptado is False
+#################
+
 
 
 class Neutral(Page):
@@ -36,13 +47,21 @@ class Chat(Page):
 
     def is_displayed(self):
 
+      #  if self.round_number == 1:
+       #     return True
+        #else:
+         #   if self.group.in_round(self.round_number - 1).precio_aceptado is False:
+          #      return True
+           # else:
+            #    return False
+
         if self.round_number == 1:
-            return True
+           return True
+        elif self.round_number == 2:
+            return self.group.in_round(self.round_number - 1).precio_aceptado is False
         else:
-            if self.group.in_round(self.round_number - 1).precio_aceptado is False:
-                return True
-            else:
-                return False
+            if self.group.in_round(self.round_number - 2).precio_aceptado is False:
+                return self.group.in_round(self.round_number - 1).precio_aceptado is False
 
 
 class Extraccion(Page):
@@ -74,15 +93,45 @@ class Oferta(Page):
     form_fields = ['precio']
 
     def is_displayed(self):
-        return self.player.bien_x is False
+        if self.round_number == 1:
+            return self.player.bien_x is False
+        elif self.round_number == 2:
+            if self.group.in_round(self.round_number - 1).precio_aceptado is False:
+                return self.player.bien_x is False
+            else:
+                return False
+        else:
+            if self.group.in_round(self.round_number - 2).precio_aceptado is False:
+                if self.group.in_round(self.round_number-1).precio_aceptado is False:
+                    return self.player.bien_x is False
+            else:
+                return False
 
 
 class Aceptar_Oferta(Page):
     form_model = 'group'
     form_fields = ['precio_aceptado']
 
+  #  def is_displayed(self):
+   #     return self.player.bien_x is True
+
     def is_displayed(self):
-        return self.player.bien_x is True
+        if self.round_number == 1:
+            return self.player.bien_x is True
+        elif self.round_number == 2:
+            if self.group.in_round(self.round_number - 1).precio_aceptado is False:
+                return self.player.bien_x is True
+            else:
+                return False
+        else:
+            if self.group.in_round(self.round_number - 2).precio_aceptado is False:
+                if self.group.in_round(self.round_number-1).precio_aceptado is False:
+                    return self.player.bien_x is True
+            else:
+                return False
+
+
+
 
 
 class EsperaResultados(WaitPage):
@@ -96,6 +145,15 @@ class EsperaResultados(WaitPage):
 
 class Results(Page):
     pass
+
+    def is_displayed(self):
+        if self.round_number == 1:
+           return True
+        elif self.round_number == 2:
+            return self.group.in_round(self.round_number - 1).precio_aceptado is False
+        else:
+            if self.group.in_round(self.round_number - 2).precio_aceptado is False:
+                return self.group.in_round(self.round_number - 1).precio_aceptado is False
 
 
 page_sequence = [
