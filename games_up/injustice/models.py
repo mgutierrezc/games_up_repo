@@ -75,7 +75,7 @@ class Player(BasePlayer):
     bien_x = models.BooleanField()
     dotacion_A = models.CurrencyField(initial=Constants.dotacion_inicial_A)
     dotacion_B = models.CurrencyField(initial=Constants.dotacion_inicial_B)
-
+    neutral = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
     extraccion = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
     # Pago ronda anterior
     pago_anterior = models.CurrencyField(initial=0)
@@ -88,4 +88,4 @@ class Player(BasePlayer):
 
     # extraccion solo sería para los jugadores tipo A
     def extraccion_max(self):
-        return self.dotacion
+        return self.dotacion_A

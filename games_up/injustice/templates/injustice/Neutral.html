@@ -2,16 +2,19 @@
 {% load otree static %}
 
 {% block title %}
-    Aceptar o Rechazar
+    Neutral
 {% endblock %}
 
 {% block content %}
-    El jugador A te ha ofrecido {{ group.precio }} por el bien. ¿Aceptarás la oferta propuesta?
+
+    ¿Cuál cree que sería  un precio justo para la venta de este bien?
 
     {% formfields %}
 
     {% next_button %}
+
 {% include Constants.instructions %}
+
 {% endblock %}
 
 

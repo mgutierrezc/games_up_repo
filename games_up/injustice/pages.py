@@ -19,8 +19,12 @@ class Introduction(Page):
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
 
+class Neutral(Page):
+    form_model = 'player'
+    form_fields = ['neutral']
+
 class Chat(Page):
-    timeout_seconds = 120
+    timeout_seconds = 60
 
 
 class Extraccion(Page):
@@ -70,8 +74,8 @@ class Results(Page):
 
 page_sequence = [
     Introduction,
+    Neutral,
     Extraccion,
-
     Espera,
     Chat,
     Oferta,

@@ -26,8 +26,8 @@ SESSION_CONFIGS = [
     ),
 
     dict(
-        name='injustice Treatment',
-        display_name="Injustice",
+        name='injustice_treatment',
+        display_name="Injustice Treatment",
         num_demo_participants=cv.num_participants,
         app_sequence=['injustice'],
         treatment=1,
