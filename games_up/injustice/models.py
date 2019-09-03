@@ -17,8 +17,13 @@ class Constants(BaseConstants):
     num_rounds = 3
 
     # Escojan aquí la dotac del comprador y los pagos recibidos por poseer el bien x
-    dotacion_inicial = 10
-    pagos_x = 2
+    dotacion_inicial_A = 100 - self.session.config['treatment']*20
+    dotacion_inicial_B = 10 + self.session.config['treatment']*20
+    pagos_x_A = 40
+    pagos_x_B = 20
+
+    #dotacion_inicial = 100
+    #pagos_x = 20
 
     # Instrucciones
     instructions = 'injustice/Instructions.html'
@@ -31,10 +36,12 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     # Precio
-    precio = models.FloatField(max=Constants.dotacion_inicial, min=0)
-    # Variable de Aceptación (True) o Rechazo (False) del precio
+    precio = models.FloatField(max=Constants.dotacion_inicial_A, min=0)
+
+    # Variable de Aceptación (True) o Rechazo (False) del precio  --- caso tratado
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
         [True, 'Aceptar'], [False, 'Rechazar']])
+
 
     def compra_x(self):
         players = self.get_players()
@@ -50,9 +57,9 @@ class Group(BaseGroup):
         for p in players:
             if self.precio_aceptado is True:
                 if p.bien_x is True:
-                    p.payoff = p.dotacion - self.precio + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion_A - self.precio + c(Constants.pagos_x_A) + p.pago_anterior + p.extraccion
                 else:
-                    p.payoff = p.dotacion + self.precio + p.pago_anterior + p.extraccion
+                    p.payoff = p.dotacion_A + self.precio + p.pago_anterior + p.extraccion
             else:
                 if p.bien_x is True:
                     p.payoff = p.dotacion + c(Constants.pagos_x) + p.pago_anterior + p.extraccion
@@ -73,8 +80,10 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Variable para saber si alguien tiene o no el bien x (True lo tiene, False no)
     bien_x = models.BooleanField()
-    dotacion = models.CurrencyField(initial=Constants.dotacion_inicial)
-    extraccion = models.CurrencyField(max=Constants.dotacion_inicial, min =0, initial=0)
+    dotacion_A = models.CurrencyField(initial=Constants.dotacion_inicial_A)
+    dotacion_B = models.CurrencyField(initial=Constants.dotacion_inicial_B)
+
+    extraccion = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
     # Pago ronda anterior
     pago_anterior = models.CurrencyField(initial=0)
 

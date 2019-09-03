@@ -71,6 +71,7 @@ class Results(Page):
 page_sequence = [
     Introduction,
     Extraccion,
+
     Espera,
     Chat,
     Oferta,
