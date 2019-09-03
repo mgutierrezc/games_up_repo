@@ -30,7 +30,11 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        self.group_randomly(fixed_id_in_group=True)
+        groups = self.get_groups()
+        for g in groups:
+            if g.precio_aceptado is True:
+                self.group_randomly(fixed_id_in_group=True)
+
         for p in self.get_players():
             p.dotacion_A -= self.session.config['treatment']*20
             p.dotacion_B += self.session.config['treatment'] * 20
