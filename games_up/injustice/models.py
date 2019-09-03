@@ -43,7 +43,6 @@ class Group(BaseGroup):
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
         [True, 'Aceptar'], [False, 'Rechazar']])
 
-
     def compra_x(self):
         players = self.get_players()
         for p in players:
@@ -52,21 +51,22 @@ class Group(BaseGroup):
             else:
                 p.bien_x = False
 
-
-
     def set_payoffs(self):
-        #players = self.get_players()
+        # oTree no les permite usar los fields de player directamente si estan en la clase Group
+        # por ello, otree tiene algunas funciones que les pueden ayudar, por ej. get_player_by_role
 
-        if p.role() == 'A':
-            if self.precio_aceptado is True:
-                p.payoff = p.dotacion_A - self.precio + c(Constants.pagos_x_A) + p.extraccion
-            else:
-                p.payoff = p.dotacion_A + p.extraccion
+        jugador_A = self.get_player_by_role('A')
+        jugador_B = self.get_player_by_role('B')
+
+        if self.precio_aceptado is True:
+            jugador_A.payoff = jugador_A.dotacion_A - self.precio + c(Constants.pagos_x_A) + jugador_A.extraccion
+            # El jugador A es el que extrae, asi que al hacer el calculo de pagos para B, necesitan usar el
+            # valor de lo extraido por A, no por B como estaba en su codigo anterior (ya que este seria 0 al no
+            # ser el que extrae)
+            jugador_B.payoff = jugador_B.dotacion_B + self.precio - jugador_A.extraccion
         else:
-            if self.precio_aceptado is True:
-                p.payoff = p.dotacion_B + self.precio - p.extraccion
-            else:
-                p.payoff = p.dotacion_B + c(Constants.pagos_x_B) - p.extraccion
+            jugador_A.payoff = jugador_A.dotacion_A + jugador_A.extraccion
+            jugador_B.payoff = jugador_B.dotacion_B + c(Constants.pagos_x_B) - jugador_A.extraccion
 
 
 #######################################################
