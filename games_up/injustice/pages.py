@@ -34,7 +34,8 @@ class Chat(Page):
 
 
 class Extraccion(Page):
-    form_model = 'player'
+    #form_model = 'player'
+    form_model = 'group'
     form_fields = ['extraccion']
 
     # Solo se mostará si estamos en el tratamiento
@@ -42,6 +43,13 @@ class Extraccion(Page):
         if self.session.config['treatment'] == 0 and self.player.role() == 'A' and self.round_number == 1:
             return False
         elif self.session.config['treatment'] == 1 and self.player.role() == 'A' and self.round_number == 1:
+            return True
+
+class Robo_resultados(Page):
+    def is_displayed(self):
+        if self.session.config['treatment'] == 0 and self.player.role() == 'B' and self.round_number == 1:
+            return False
+        elif self.session.config['treatment'] == 1 and self.player.role() == 'B' and self.round_number == 1:
             return True
 
 
@@ -82,6 +90,8 @@ page_sequence = [
     Introduction,
     Neutral,
     Extraccion,
+    Espera,
+    Robo_resultados,
     Espera,
     Chat,
     Oferta,

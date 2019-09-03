@@ -20,6 +20,7 @@ class Constants(BaseConstants):
     dotacion_inicial_B = 10
     pagos_x_A = 40
     pagos_x_B = 20
+    robo = 20
 
     #dotacion_inicial = 100
     #pagos_x = 20
@@ -43,6 +44,10 @@ class Group(BaseGroup):
     # Precio
     precio = models.FloatField(max=Constants.dotacion_inicial_A, min=0)
 
+    #######################################################################
+    extraccion = models.BooleanField(initial=False)
+    #######################################################################
+
     # Variable de Aceptación (True) o Rechazo (False) del precio  --- caso tratado
     precio_aceptado = models.BooleanField(widget=widgets.RadioSelect, choices=[
         [True, 'Aceptar'], [False, 'Rechazar']])
@@ -63,14 +68,19 @@ class Group(BaseGroup):
         jugador_B = self.get_player_by_role('B')
 
         if self.precio_aceptado is True:
-            jugador_A.payoff = jugador_A.dotacion_A - self.precio + c(Constants.pagos_x_A) + jugador_A.extraccion
+            #jugador_A.payoff = jugador_A.dotacion_A - self.precio + c(Constants.pagos_x_A) + (jugador_A.extraccion)*c(Constants.robo)
+            jugador_A.payoff = jugador_A.dotacion_A - self.precio + c(Constants.pagos_x_A) + (self.extraccion) * c(Constants.robo)
             # El jugador A es el que extrae, asi que al hacer el calculo de pagos para B, necesitan usar el
             # valor de lo extraido por A, no por B como estaba en su codigo anterior (ya que este seria 0 al no
             # ser el que extrae)
-            jugador_B.payoff = jugador_B.dotacion_B + self.precio - jugador_A.extraccion
+            #jugador_B.payoff = jugador_B.dotacion_B + self.precio - (jugador_A.extraccion)*c(Constants.robo)
+            jugador_B.payoff = jugador_B.dotacion_B + self.precio - (self.extraccion) * c(Constants.robo)
+
         else:
-            jugador_A.payoff = jugador_A.dotacion_A + jugador_A.extraccion
-            jugador_B.payoff = jugador_B.dotacion_B + c(Constants.pagos_x_B) - jugador_A.extraccion
+            #jugador_A.payoff = jugador_A.dotacion_A + (jugador_A.extraccion)*c(Constants.robo)
+            jugador_A.payoff = jugador_A.dotacion_A + (self.extraccion) * c(Constants.robo)
+            #jugador_B.payoff = jugador_B.dotacion_B + c(Constants.pagos_x_B) - (jugador_A.extraccion) * c(Constants.robo)
+            jugador_B.payoff = jugador_B.dotacion_B + c(Constants.pagos_x_B) - (self.extraccion)*c(Constants.robo)
 
 
 #######################################################
@@ -80,7 +90,8 @@ class Player(BasePlayer):
     dotacion_A = models.CurrencyField(initial=Constants.dotacion_inicial_A)
     dotacion_B = models.CurrencyField(initial=Constants.dotacion_inicial_B)
     neutral = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
-    extraccion = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
+    #extraccion = models.BooleanField()
+    #extraccion = models.CurrencyField(max=Constants.dotacion_inicial_A, min =0, initial=0)
     # Pago ronda anterior
     pago_anterior = models.CurrencyField(initial=0)
 

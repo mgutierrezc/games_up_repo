@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Extracción
+{% endblock %}
+
+{% block content %}
+
+    {% if group.extraccion == True %}
+    Se le dio la opción al jugador A de extraer S/ 20 de tu dotación inicial. Él aceptó hacerlo. Tu nueva riqueza es S/ 10
+
+    {% else %}
+
+    Se le dio la opción al jugador A de extraer S/ 20 de tu dotación inicial. Él rechazó hacerlo. Tu riqueza sigue siendo S/ 30
+
+    {% endif %}
+    {% next_button %}
+
+{% include Constants.instructions %}
+
+{% endblock %}
+
+
