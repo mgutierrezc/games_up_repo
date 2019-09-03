@@ -22,8 +22,8 @@ class Constants(BaseConstants):
     pagos_x_B = 20
     robo = 20
 
-    #dotacion_inicial = 100
-    #pagos_x = 20
+    # dotacion_inicial = 100
+    # pagos_x = 20
 
     # Instrucciones
     instructions = 'injustice/Instructions.html'
@@ -39,6 +39,7 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             p.dotacion_A -= self.session.config['treatment']*20
             p.dotacion_B += self.session.config['treatment'] * 20
+
 
 class Group(BaseGroup):
     # Precio

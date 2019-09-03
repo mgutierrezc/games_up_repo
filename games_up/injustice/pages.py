@@ -19,6 +19,7 @@ class Introduction(Page):
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
             self.player.pago_anterior = self.player.in_round(self.round_number - 1).payoff
 
+
 class Neutral(Page):
     form_model = 'player'
     form_fields = ['neutral']
