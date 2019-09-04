@@ -15,7 +15,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 SESSION_CONFIGS = [
     dict(
         name='injustice',
-        display_name="Injustice",
+        display_name="Injustice Control",
         num_demo_participants=cv.num_participants,
         app_sequence=['injustice'],
         treatment=0,
@@ -24,12 +24,19 @@ SESSION_CONFIGS = [
         treatment = 1: Juego en versión de tratamiento
         """
     ),
-    dict(    
-        name='denomination',
-        display_name="Denomination",
+
+    dict(
+        name='injustice_treatment',
+        display_name="Injustice Treatment",
         num_demo_participants=cv.num_participants,
-        app_sequence=['denomination']
+        app_sequence=['injustice'],
+        treatment=1,
+        doc="""
+    treatment = 0: Juego en versión de control
+    treatment = 1: Juego en versión de tratamiento
+    """
     ),
+
     dict(
         name='public_goods',
         display_name="Public Goods",
