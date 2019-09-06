@@ -1,0 +1,40 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Results: Round {{ subsession.round_number }}
+{% endblock %}
+
+{% block content %}
+    <p>
+        This round, you were a {{ role_pre }}.
+        <br>
+        {% if token_color != Constants.trade_good %}
+        You had a {{ token_color }} token.
+        <br>
+        {% endif %}
+        You were randomly paired with a {{ other_role_pre }}.
+        <br>
+        {% if trade_attempted %}
+        You attempted to trade.
+        <br>
+        {% else %}
+        You did or could not attempt to trade.
+        {% endif %}
+        {% if trade_succeeded %}
+        You successfully traded. You now have a
+        {% if new_token_color != Constants.trade_good %}
+        {{ new_token_color }} token.
+        {% else %}
+        trade good.
+        {% endif %}
+        <br>
+        {% endif %}
+        You earned {{ round_payoff|c }} points this round.
+        <br>
+        Your total payoff so far is {{ player.participant.payoff|c }}.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
