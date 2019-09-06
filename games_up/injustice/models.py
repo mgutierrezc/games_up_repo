@@ -46,7 +46,10 @@ class Group(BaseGroup):
     precio = models.FloatField(max=Constants.dotacion_inicial_A, min=0)
 
     #######################################################################
-    extraccion = models.BooleanField(initial=False)
+#    extraccion = models.BooleanField(initial=False)
+    extraccion = models.BooleanField(widget=widgets.RadioSelect, choices=[
+        [True, 'Aceptar'], [False, 'Rechazar']],initial=False)
+
     #######################################################################
 
     # Variable de Aceptación (True) o Rechazo (False) del precio  --- caso tratado

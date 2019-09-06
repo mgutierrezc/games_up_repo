@@ -6,7 +6,7 @@
         Instrucciones <font color="black">
     </h3>
     <p>
-       Bienvenido! En este experimento vas a participar en {{ Constants.num_rounds }} rondas de la misma interacción.
+       ¡Bienvenido! En este experimento vas a participar en {{ Constants.num_rounds }} rondas de la misma interacción.
        Antes de comenzar, serás emparejado con otro participante y <strong>se mantendrá este emparejamiento en todas
        las rondas</strong>.
        El emparejamiento se realizará al azar y de forma anónima. Es decir, tendrás una contraparte pero no sabrás
@@ -19,16 +19,16 @@
         {% if player.role == 'A' %}
 
         Has sido elegido como el <strong>jugador A</strong>. Tu dotación inicial es {{ player.dotacion_A }}. La dotación inicial del jugador B es {{ player.dotacion_B }}
-        El jugador B posee un bien, el cual puede ser comprado por usted si llegan a un acuerdo de precio.
-        Si usted logra comprar el bien, recibirá su dotación inicial ({{ player.dotacion_A }}) y además ganará S/ 40 (que es su valoración por el bien) y deberá pagar el precio acordado al jugador B.
+        . El jugador B posee un bien, el cual puede ser comprado por usted si llegan a un acuerdo de precio.
+        Si usted logra comprar el bien, recibirá su dotación inicial ({{ player.dotacion_A }}) y además ganará 40 puntos (que es su valoración por el bien) y deberá pagar el precio acordado al jugador B.
         Si usted no logra comprar el bien, recibirá solamente su dotación inicial ({{ player.dotacion_A }}).
 
         {% else %}
 
         Has sido elegido como el <strong>jugador B</strong>. Tu dotación inicial es {{ player.dotacion_B }}. La dotación inicial del jugador A es {{ player.dotacion_A }}
-        Usted posee un bien, el cual puede ser vendido al jugador A si llegan a un acuerdo de precio.
+        . Usted posee un bien, el cual puede ser vendido al jugador A si llegan a un acuerdo de precio.
         Si usted logra vender el bien, recibirá su dotación inicial ({{ player.dotacion_B }}) más el precio acordado con el jugador A.
-        Si usted no logra vender el bien, recibirá su dotación inicial ({{ player.dotacion_B }}) y además ganará S/ 20 (que es su valoración por el bien).
+        Si usted no logra vender el bien, recibirá su dotación inicial ({{ player.dotacion_B }}) y además ganará 20 puntos (que es su valoración por el bien).
 
         {% endif %}
     </p>
