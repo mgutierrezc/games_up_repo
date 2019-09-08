@@ -14,6 +14,8 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 )
 
+DEBUG = 0
+
 SESSION_CONFIGS = [
     dict(
         name='injustice',
