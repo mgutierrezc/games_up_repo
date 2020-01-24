@@ -1,2 +1,5 @@
-# games_up_repo
- Repositorio con los experimentos UP 2019 2
+# Experimental Economics Games
+Programmer: Marco Gutierrez
+
+Repository with Experiments for 
+Repositorio con los experimentos UP 2019 2
