@@ -74,7 +74,7 @@ Here are some oTree games.
 """
 
 # don't share this with anybody.
-SECRET_KEY = '0oai^ry32s7(&sz0$=j(9by7(=!1g-s9vfr7y-bbz=63w!wnvu'
+SECRET_KEY = environ.get('DJANGO_SECRET_KEY')
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
